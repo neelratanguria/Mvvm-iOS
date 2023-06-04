@@ -67,7 +67,15 @@ struct ContentView: View {
                     moves = Array(repeating: nil, count: 9)
                 }, label: {
                     Text("Reset")
+                        .frame(
+                            width: 280,
+                            height: 50
+                        )
+                        .background(.yellow)
+                        .font(.system(size: 20, weight: .bold, design: .default))
+                        .cornerRadius(10)
                 })
+                Spacer()
             }
             
         }
