@@ -31,29 +31,13 @@ struct ContentView: View {
                                     width: geometry.size.width/3 - 15,
                                     height: geometry.size.width/3
                                 )
-                            
-                            if(moves[i]==nil) {
-                                
-                            } else{
-                                if(moves[i]?.player == .Human){
-                                    Image(systemName: "xmark")
+                            Image(systemName: moves[i]?.indicator ?? "")
                                         .resizable()
                                         .frame(
                                             width: 40,
                                             height: 40
                                         )
                                         .foregroundColor(.gray)
-                                } else {
-                                    Image(systemName: "circle")
-                                        .resizable()
-                                        .frame(
-                                            width: 40,
-                                            height: 40
-                                        )
-                                        .foregroundColor(.gray)
-                                }
-                                
-                            }
                         }
                         .onTapGesture {
                             moves[i] = Move(player: isHumanTurn ? .Human : .Computer, boardIndex: i)
@@ -91,7 +75,7 @@ struct Move {
     let boardIndex: Int
     
     var indicator: String {
-        return player == .Human ? "xmar" : "circle"
+        return player == .Human ? "xmark" : "circle"
     }
 }
 
