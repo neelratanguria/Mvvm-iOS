@@ -40,9 +40,12 @@ struct ContentView: View {
                                         .foregroundColor(.gray)
                         }
                         .onTapGesture {
-                            moves[i] = Move(player: isHumanTurn ? .Human : .Computer, boardIndex: i)
-                            isHumanTurn.toggle()
-                            
+                            if isSquaredOccupied(in: moves, forIndex: i) { return }
+                            moves[i] = Move(player: .Human, boardIndex: i)
+
+                            if(isDone(in: moves)) {return}
+                            let computerPos = determineComputureMovePosition(in: moves)
+                            moves[computerPos] = Move(player: .Computer, boardIndex: computerPos)
                         }
                     }
                 }
@@ -63,6 +66,23 @@ struct ContentView: View {
             }
             
         }
+    }
+    
+    func isSquaredOccupied(in moves: [Move?], forIndex index: Int) -> Bool {
+        return moves.contains(where: { $0?.boardIndex == index})
+    }
+    
+    func isDone(in moves: [Move?]) -> Bool {
+        return !moves.contains(where: { $0 == nil })
+    }
+    
+    func determineComputureMovePosition(in moves: [Move?]) -> Int {
+        var movePosition = Int.random(in: 0..<9)
+        
+        while (isSquaredOccupied(in: moves, forIndex: movePosition)) {
+            movePosition = Int.random(in: 0..<9)
+        }
+        return movePosition
     }
 }
 
